@@ -1,0 +1,1 @@
+spring-boot.build-image.imageName=myrepo/myimage:v0.0.2
