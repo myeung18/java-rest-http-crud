@@ -17,5 +17,6 @@ public class MyServiceBindingsPropertiesProcessor implements BindingsPropertiesP
             System.out.println(secret);
         }
 
+        System.out.println("my service binding ...........");
     }
 }

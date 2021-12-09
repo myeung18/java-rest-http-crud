@@ -9,21 +9,28 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = "io.openshift.booster.java_rest_http_crud")
 public class BoosterApplication {
 
-	public static void main(String[] args) throws Exception {
-		URL url;
-		try {
-			Class.forName("org.postgresql.Driver");
-			DriverManager.getConnection(System.getenv("JDBC_URL"), System.getenv("DB_USER"),
-					System.getenv("DB_PASSWORD"));
-			// System.out.println("DB is available!!");
-			url = BoosterApplication.class.getResource("/BOOT-INF/classes/db.properties");
-		} catch (Exception e) {
-			// System.out.printf("DB is no available!!: %s\n", e.getLocalizedMessage());
-			url = BoosterApplication.class.getResource("/BOOT-INF/classes/no-db.properties");
-		}
+    public static void main(String[] args) throws Exception {
+        URL url;
+        try {
+//            System.out.println(System.getenv("JDBC_URL") + " > " + System.getenv("DB_USER") + " to " + "172.17.0.2");
 
-		System.setProperty("spring.config.location", url.toString());
+            Class.forName("org.postgresql.Driver");
+            DriverManager.getConnection("jdbc:postgresql://172.30.167.31:5432/db-demo", "postgres",
+                    "password");
+//            DriverManager.getConnection("jdbc:postgresql://172.17.0.2:5432/upperio", "upperio_user",
+//                    "upperio//s3cr37");
+//            DriverManager.getConnection(System.getenv("JDBC_URL"), System.getenv("DB_USER"),
+//                    System.getenv("DB_PASSWORD"));
+            System.out.println("DB is available!!");
+            url = BoosterApplication.class.getResource("/BOOT-INF/classes/db.properties");
+        } catch (Exception e) {
+            System.out.println("DB is no available!!: " + e.getLocalizedMessage());
+            url = BoosterApplication.class.getResource("/BOOT-INF/classes/no-db.properties");
+        }
 
-		SpringApplication.run(BoosterApplication.class, args);
-	}
+        System.out.println("url " + ", " + url);
+        System.setProperty("spring.config.location", url.toString());
+
+        SpringApplication.run(BoosterApplication.class, args);
+    }
 }
